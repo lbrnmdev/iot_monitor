@@ -9,7 +9,8 @@ module MyMqtt
         c.subscribe('/monitor/status', '/board/temp', '/board/button') # subscribe to topics
         c.get do |topic, message|
           Rails.logger.info("Topic: #{topic}, Message: #{message}")
-          "Topic: #{topic}, Message: #{message}"
+          puts "Topic: #{topic}, Message: #{message}"
+          ActionCable.server.broadcast 'mqtt_stream_channel', content: "received mqtt msg"
         end
       end
     end

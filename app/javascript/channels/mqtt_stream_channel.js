@@ -11,5 +11,10 @@ consumer.subscriptions.create("MqttStreamChannel", {
 
   received(data) {
     // Called when there's incoming data on the websocket for this channel
+
+    var node = document.createElement("P");
+    var textnode = document.createTextNode("new reading");
+    node.appendChild(textnode);
+    document.getElementById("new_reading").appendChild(node);
   }
 });

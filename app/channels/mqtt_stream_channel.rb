@@ -1,6 +1,6 @@
 class MqttStreamChannel < ApplicationCable::Channel
   def subscribed
-    # stream_from "some_channel"
+    stream_from "mqtt_stream_channel"
   end
 
   def unsubscribed
