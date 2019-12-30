@@ -10,9 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2019_12_27_200059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "devices", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "status"
+    t.datetime "status_time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_devices_on_name", unique: true
+  end
+
+  create_table "temp_readings", force: :cascade do |t|
+    t.decimal "value"
+    t.string "unit"
+    t.datetime "received_time", null: false
+    t.bigint "device_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["device_id"], name: "index_temp_readings_on_device_id"
+  end
+
+  add_foreign_key "temp_readings", "devices"
 end

@@ -1,0 +1,2 @@
+class TempReadingsController < ApplicationController
+end

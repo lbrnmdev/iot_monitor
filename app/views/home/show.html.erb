@@ -1,52 +1,53 @@
 <div class="ui middle aligned center aligned grid box_centered">
   <div class="six wide column">
-    <h2 class="ui icon header">
+
+    <h5 class="ui icon header">
       <i class="broadcast tower icon"></i>
       <div class="content">
-        iot monitor
+        <%= link_to 'iot monitor', root_path %>
       </div>
-    </h2>
+    </h5>
 
-    <div class="ui divider">
+    <div class="ui divider"></div>
 
-    </div>
+    <div class="ui left aligned segment">
+      <div class="ui divided relaxed items">
 
-    <div class="ui segment">
-      <div id="new_reading" class="">
-        
+        <% # TODO: Update readings + online status as they come in via js stream %>
+        <% # BUG: Puts devices that have no temp_reading value at the top %>
+        <% if Device.any? %>
+          <% Device.includes(:temp_readings).order('temp_readings.received_time DESC').each do |device| %>
+            <%= link_to device, class: 'item' do %>
+              <div class="content">
+                <div class="header">
+                  <%= device.name %>
+                </div>
+                <div class="meta">
+                  <% if device.status %>
+                    <span><%= device.status %> on <%= device.status_time.in_time_zone(Time.now.zone).to_s(:rfc822) %></span>
+                  <% end %>
+                </div>
+                <div class="description">
+                  <p>[Device Description]</p>
+                  <p>[Location data]</p>
+                </div>
+              </div>
+              <% if device.temp_readings.any? %>
+                <div class="ui <%= temp_reading_color device.temp_readings.first.value %> statistic">
+                  <div class="value">
+                    <%= device.temp_readings.first.value.to_s if device.temp_readings.any? %>
+                  </div>
+                  <div class="label">
+                    Celsius
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+
       </div>
     </div>
 
-    <div class="ui basic segment">
-      <div class="ui grid">
-        <div class="eight wide column">
-          <h3>online</h3>
-        </div>
-        <div class="eight wide column">
-          <h3>24°C</h3>
-        </div>
-      </div>
-    </div>
-
-    <div class="ui basic segment">
-      <table class="ui very basic table">
-        <thead>
-          <tr>
-            <th>date/time</th>
-            <th class="right aligned">temperature [°C]</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>December 25th 2019 at 11:30</td>
-            <td class="right aligned">25</td>
-          </tr>
-          <tr>
-            <td>December 25th 2019 at 11:35</td>
-            <td class="right aligned">25</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
   </div>
 </div>

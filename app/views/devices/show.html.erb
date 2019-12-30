@@ -1,0 +1,44 @@
+<div class="ui middle aligned center aligned grid box_centered">
+  <div class="six wide column">
+
+    <h5 class="ui icon header">
+      <i class="broadcast tower icon"></i>
+      <div class="content">
+        <%= link_to 'iot monitor', root_path %>
+      </div>
+    </h5>
+
+    <div class="ui divider"></div>
+
+    <div class="ui segment">
+      <h1 class="ui header">
+        <div class="content" id="device_name">
+          <%= @device.name %>
+        </div>
+        <div class="sub header" id="device_status">
+          <%= @device.status %> on <%= @device.status_time.in_time_zone(@zone).to_s(:rfc822) %>
+        </div>
+      </h1>
+    </div>
+
+    <table class="ui very basic table">
+      <thead>
+        <tr>
+          <th>Received at</th>
+          <th>Value</th>
+          <th>Unit</th>
+        </tr>
+      </thead>
+      <tbody id="reading_table_body">
+        <% @device.temp_readings.limit(5).each do |temp_reading| %>
+          <tr>
+            <td><%= temp_reading.received_time.in_time_zone(@zone).to_s(:rfc822) %></td>
+            <td class="right aligned"><%= temp_reading.value.to_s %></td>
+            <td>Celsius</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+</div>
