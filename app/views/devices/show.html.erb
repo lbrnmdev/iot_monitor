@@ -1,14 +1,25 @@
 <div class="ui middle aligned center aligned grid box_centered">
-  <div class="six wide column">
 
+  <div class="twelve wide column">
     <h5 class="ui icon header">
       <i class="broadcast tower icon"></i>
       <div class="content">
         <%= link_to 'iot monitor', root_path %>
       </div>
     </h5>
-
     <div class="ui divider"></div>
+  </div>
+
+  <div class="six wide column">
+    <%=
+      # BUG: X axis doesn't rescale on receiving new data. Desired behavior is
+      #      for left-most value to disappear as newer value is received
+      line_chart(@device.temp_readings.take(10).pluck(:received_time, :value),
+        id:"temp-chart", ytitle: "Temperature [°C]", messages: {empty: "No data"}, legend: false)
+    %>
+  </div>
+
+  <div class="six wide column">
 
     <div class="ui segment">
       <h1 class="ui header">

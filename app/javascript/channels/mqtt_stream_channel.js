@@ -40,6 +40,12 @@ consumer.subscriptions.create("MqttStreamChannel", {
           reading_table_body.removeChild(reading_table_body.lastElementChild);
         }
         reading_table_body.insertBefore(reading_row, reading_table_body.firstElementChild);
+
+        var chart_pair = [new Date(info[3]), parseInt(info[2])];
+        var temp_chart = Chartkick.charts["temp-chart"];
+        var chart_data = temp_chart.getData();
+        (chart_data[0]["data"]).push(chart_pair);
+        temp_chart.updateData(chart_data);
       } else {
 
       }
