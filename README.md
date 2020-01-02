@@ -42,6 +42,7 @@ Navigate to http://localhost:3000
 ![Diagram](app/assets/images/home.png)
 
 ### Roadmap
+- Testing!
 - Device description and location data
 - Allow for devices to log readings of any sort, not just temperature
 - Allow for data/commands to be sent to subscribed devices
